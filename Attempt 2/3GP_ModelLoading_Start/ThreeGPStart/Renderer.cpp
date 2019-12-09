@@ -52,7 +52,7 @@ bool Renderer::InitialiseGeometry()
 	Model newModel;
 
 	// YOU ARE HERE - TRYING TO LOAD THE IMAGE TEXTURES
-	newModel.Load("Data\\Sky\\Mountains\\skybox.x", "Data\\Sky\\Mountains\\", 0);
+	newModel.LoadSkybox("Data\\Sky\\Mountains\\skybox.x", 0);
 	modelVector.push_back(newModel);
 		
 	newModel.Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
@@ -60,7 +60,6 @@ bool Renderer::InitialiseGeometry()
 	
 	newModel.LoadTerrain("Data\\Textures\\grass11.bmp", 0);
 	modelVector.push_back(newModel);
-
 
 	return true;
 }

@@ -20,7 +20,7 @@ bool MyMesh::Load(std::string filename, std::string imgFilename, GLuint tex)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageLoader.Width(), imageLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageLoader.GetData());
 	glGenerateMipmap(GL_TEXTURE_2D);
-	
+
 	// Creates VBOs and VAO
 	for (const Helpers::Mesh& mesh : loader.GetMeshVector())
 	{
@@ -183,30 +183,43 @@ bool MyMesh::LoadTerrain(std::string filename, GLuint tex)
 	return true;
 }
 
-bool MyMesh::LoadSkybox(std::string filename, std::string imgFilename, GLuint tex)
+bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
 {
+	std::vector<std::string> skyboxImgVector =
+	{
+		"Data\\Sky\\Mountains\\1.jpg",
+		"Data\\Sky\\Mountains\\2.jpg",
+		"Data\\Sky\\Mountains\\3.jpg",
+		"Data\\Sky\\Mountains\\4.jpg",
+		"Data\\Sky\\Mountains\\5.jpg",
+		"Data\\Sky\\Mountains\\6.jpg",
+	};
+
 	Helpers::ModelLoader loader;
 	if (!loader.LoadFromFile(filename))
 		return false;
 
 	loader.GetMeshVector();
 
-	Helpers::ImageLoader imageLoader;
-	if (!imageLoader.Load(imgFilename))
-		return false;
-
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageLoader.Width(), imageLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageLoader.GetData());
-	glGenerateMipmap(GL_TEXTURE_2D);
+	int i = 0;
 
 	// Creates VBOs and VAO
 	for (const Helpers::Mesh& mesh : loader.GetMeshVector())
 	{
+		Helpers::ImageLoader imageLoader;
+		if (!imageLoader.Load(skyboxImgVector[i]))
+			return false;
+
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageLoader.Width(), imageLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageLoader.GetData());
+		glGenerateMipmap(GL_TEXTURE_2D);
+		i++;
+
 		GLuint positionsVBO;
 		glGenBuffers(1, &positionsVBO);
 		glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);

@@ -2,8 +2,9 @@
 #include "ExternalLibraryHeaders.h"
 #include "Helper.h"
 #include "Mesh.h"
+#include "MyMesh.h"
 
-class Skybox
+class Skybox : public MyMesh
 {
 };
 

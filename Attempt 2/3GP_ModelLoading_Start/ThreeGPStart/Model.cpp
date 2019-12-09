@@ -14,11 +14,9 @@ void Model::LoadTerrain(std::string filename, GLuint tex)
 	meshVector.push_back(newTerrain);
 }
 
-void Model::LoadSkybox(std::string filename, std::string imgFilename, GLuint tex)
+void Model::LoadSkybox(std::string filename, GLuint tex)
 {
-	MyMesh newSkybox;
-	newSkybox.LoadSkybox(filename, imgFilename, tex);
-	meshVector.push_back(newSkybox);
+	newSkybox.LoadSkybox(filename, tex);
 }
 
 void Model::Draw(GLuint& m_program)
@@ -36,3 +34,5 @@ void Model::Draw(GLuint& m_program)
 	// Always a good idea, when debugging at least, to check for GL errors
 	Helpers::CheckForGLError();
 }
+
+
