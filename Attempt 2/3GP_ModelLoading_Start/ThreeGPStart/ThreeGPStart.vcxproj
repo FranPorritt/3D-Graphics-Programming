@@ -169,8 +169,11 @@
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="MyMesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,8 +186,11 @@
     <ClInclude Include="Helper.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="MyMesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Simulation.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Terrain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

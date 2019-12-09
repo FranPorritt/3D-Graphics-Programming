@@ -133,8 +133,8 @@ bool Terrain::HeightMap()
 	{
 		for (int vertX = 0; vertX < numVertsX; vertX++)
 		{
-			int imageX = vertexXtoImage * vertX;
-			int imageZ = vertexZtoImage * vertZ;
+			float imageX = vertexXtoImage * vertX;
+			float imageZ = vertexZtoImage * vertZ;
 
 			size_t offset = ((size_t)imageX + (size_t)imageZ * mapLoader.Width()) * 4;
 			BYTE height = mapData[offset];
@@ -144,94 +144,6 @@ bool Terrain::HeightMap()
 			currentVertex++;
 		}
 	}
-
-	return true;
-}
-
-bool Terrain::Initialise()
-{
-	// TERRAIN
-
-	//Helpers::ImageLoader texLoader;
-	//if (!texLoader.Load("Data\\Textures\\grass11.bmp"))
-	//	return false;
-
-	//glGenTextures(1, &tex);
-	//glBindTexture(GL_TEXTURE_2D, tex);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texLoader.Width(), texLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texLoader.GetData());
-	//glGenerateMipmap(GL_TEXTURE_2D);
-
-	//CreateMesh();
-
-	//GLuint terrainPosVBO;
-	//glGenBuffers(1, &terrainPosVBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, terrainPosVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//GLuint terrainIndicesEBO;
-	//glGenBuffers(1, &terrainIndicesEBO);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainIndicesEBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), indices.data(), GL_STATIC_DRAW);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	//GLuint normalsVBO;
-	//glGenBuffers(1, &normalsVBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
-
-	//GLuint texVBO;
-	//glGenBuffers(1, &texVBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * uvcoords.size(), uvcoords.data(), GL_STATIC_DRAW);
-
-	//glGenVertexArrays(1, &m_VAO);
-	//glBindVertexArray(m_VAO);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, terrainPosVBO);
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(
-	//	0,
-	//	3,
-	//	GL_FLOAT,
-	//	GL_FALSE,
-	//	0,
-	//	(void*)0
-	//);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(
-	//	1,
-	//	3,
-	//	GL_FLOAT,
-	//	GL_FALSE,
-	//	0,
-	//	(void*)0
-	//);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-	//glEnableVertexAttribArray(2);
-	//glVertexAttribPointer(
-	//	2,
-	//	2,
-	//	GL_FLOAT,
-	//	GL_FALSE,
-	//	0,
-	//	(void*)0
-	//);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainIndicesEBO);
-
-	//// Good idea to check for an error now:	
-	//Helpers::CheckForGLError();
-
-	//// Clear VAO binding
-	//glBindVertexArray(0);
 
 	return true;
 }

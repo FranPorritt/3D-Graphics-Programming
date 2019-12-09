@@ -26,13 +26,9 @@ public:
 
 	const int numVertices = (numCellsX * 2) + (numCellsZ * 2);;
 
-	const int terrainSize = 1000;
+	const int terrainSize = 1500;
 	const int cellSize = terrainSize / numCellsX;
-
-	GLuint tex;
-	GLuint m_VAO = 0;
-	GLuint m_numElements = 0;
-
+	
 	Terrain();
 	~Terrain();
 
@@ -42,5 +38,4 @@ public:
 	void CreateNormals();
 	void CreateUVs();
 	bool HeightMap();
-	bool Initialise();
 };

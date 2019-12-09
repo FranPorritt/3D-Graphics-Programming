@@ -49,193 +49,18 @@ bool Renderer::InitialiseGeometry()
 	if (!CreateProgram())
 		return false;
 
-	// TODO - load mesh using the Helpers::ModelLoader class
-	Helpers::ModelLoader loader;
-	if (!loader.LoadFromFile("Data\\Models\\Jeep\\jeep.obj"))
-		return false;
+	Model newModel;
 
-	loader.GetMeshVector();
+	// YOU ARE HERE - TRYING TO LOAD THE IMAGE TEXTURES
+	newModel.Load("Data\\Sky\\Mountains\\skybox.x", "Data\\Sky\\Mountains\\", 0);
+	modelVector.push_back(newModel);
+		
+	newModel.Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
+	modelVector.push_back(newModel);
+	
+	newModel.LoadTerrain("Data\\Textures\\grass11.bmp", 0);
+	modelVector.push_back(newModel);
 
-	Helpers::ImageLoader imageLoader;
-	if (!imageLoader.Load("Data\\Models\\Jeep\\jeep_army.jpg"))
-		return false;
-
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageLoader.Width(), imageLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageLoader.GetData());
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	for (const Helpers::Mesh& mesh : loader.GetMeshVector())
-	{
-		GLuint positionsVBO;
-		glGenBuffers(1, &positionsVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.vertices.size(), mesh.vertices.data(), GL_STATIC_DRAW);
-
-		GLuint normalsVBO;
-		glGenBuffers(1, &normalsVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * mesh.normals.size(), mesh.normals.data(), GL_STATIC_DRAW);
-
-		GLuint elementsEBO;
-		glGenBuffers(1, &elementsEBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementsEBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * mesh.elements.size(), mesh.elements.data(), GL_STATIC_DRAW);
-
-		GLuint texVBO;
-		glGenBuffers(1, &texVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * mesh.uvCoords.size(), mesh.uvCoords.data(), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		GLuint tempVAO;
-
-		glGenVertexArrays(1, &tempVAO);
-		glBindVertexArray(tempVAO);
-
-		glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(
-			0,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
-
-		glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(
-			1,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
-
-		glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(
-			2,
-			2,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementsEBO);
-
-		MyMesh tempMesh;
-		tempMesh.mesh_VAO = tempVAO;
-		tempMesh.mesh_numElements = mesh.elements.size();
-		tempMesh.mesh_tex = tex;
-
-		meshVector.push_back(tempMesh);
-
-		glBindVertexArray(0);
-	}
-
-	// TERRAIN
-	Terrain terrain;
-
-	Helpers::ImageLoader terrainImageLoader;
-	if (!terrainImageLoader.Load("Data\\Textures\\grass11.bmp"))
-		return false;
-
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, terrainImageLoader.Width(), terrainImageLoader.Height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, terrainImageLoader.GetData());
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	terrain.CreateMesh();
-
-	GLuint terrainPosVBO;
-	glGenBuffers(1, &terrainPosVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, terrainPosVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * terrain.vertices.size(), terrain.vertices.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	GLuint terrainElementsEBO;
-	glGenBuffers(1, &terrainElementsEBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainElementsEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * terrain.elements.size(), terrain.elements.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	GLuint normalsVBO;
-	glGenBuffers(1, &normalsVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * terrain.normals.size(), terrain.normals.data(), GL_STATIC_DRAW);
-
-	GLuint texVBO;
-	glGenBuffers(1, &texVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * terrain.uvcoords.size(), terrain.uvcoords.data(), GL_STATIC_DRAW);
-
-	GLuint tempVAO;
-
-	glGenVertexArrays(1, &tempVAO);
-	glBindVertexArray(tempVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, terrainPosVBO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(
-		0,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0
-	);
-
-	glBindBuffer(GL_ARRAY_BUFFER, normalsVBO);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(
-		1,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0
-	);
-
-	glBindBuffer(GL_ARRAY_BUFFER, texVBO);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(
-		2,
-		2,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0
-	);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainElementsEBO);
-
-	MyMesh tempMesh;
-	tempMesh.mesh_VAO = tempVAO;
-	tempMesh.mesh_numElements = terrain.elements.size();
-	tempMesh.mesh_tex = tex;
-
-	meshVector.push_back(tempMesh);
-
-	// Good idea to check for an error now:	
-	Helpers::CheckForGLError();
-
-	// Clear VAO binding
-	glBindVertexArray(0);
 
 	return true;
 }
@@ -270,20 +95,21 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 	GLuint combined_xform_id = glGetUniformLocation(m_program, "combined_xform");
 	glUniformMatrix4fv(combined_xform_id, 1, GL_FALSE, glm::value_ptr(combined_xform));
 
+	GLuint lightPos_id = glGetUniformLocation(m_program, "lightPos");
+	glUniformMatrix4fv(lightPos_id, 1, GL_FALSE, glm::value_ptr((glm::vec3)(0, 50, 0)));
+	
+	GLuint cameraPos_id = glGetUniformLocation(m_program, "cameraPos");
+	glUniformMatrix4fv(lightPos_id, 1, GL_FALSE, glm::value_ptr(camera.GetPosition()));
+
 	glm::mat4 model_xform = glm::mat4(1);
 
 	// Send the model matrix to the shader in a uniform
 	GLuint model_xform_id = glGetUniformLocation(m_program, "model_xform");
 	glUniformMatrix4fv(model_xform_id, 1, GL_FALSE, glm::value_ptr(model_xform));
-	
-	for (auto& mesh : meshVector)
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, mesh.mesh_tex);
-		glUniform1i(glGetUniformLocation(m_program, "sampler_tex"), 0);
 
-		glBindVertexArray(mesh.mesh_VAO);
-		glDrawElements(GL_TRIANGLES, mesh.mesh_numElements, GL_UNSIGNED_INT, (void*)0);
+	for (auto& model : modelVector)
+	{
+		model.Draw(m_program);
 	}
 
 	// Always a good idea, when debugging at least, to check for GL errors

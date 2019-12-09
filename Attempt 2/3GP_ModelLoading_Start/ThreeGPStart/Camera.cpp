@@ -16,7 +16,7 @@ namespace Helpers
 
 		std::cout << "\nCamera Controls" << std::endl;
 		std::cout << "WASD - moves the camera left, right (x axis) and into and out of the scene (Z axis)" << std::endl;
-		std::cout << "Up and Down arrows - moves the camera up and down the Y axis." << std::endl;
+		std::cout << "Q and E arrows - moves the camera up and down the Y axis." << std::endl;
 		std::cout << "Space Bar - resets the view to its initial state." << std::endl;
 		std::cout << "Hold the left mouse button while moving the mouse to rotate the camera" << std::endl;
 		std::cout << "Holding left CTRL key accelerates movement and rotation" << std::endl << std::endl;
@@ -74,7 +74,7 @@ namespace Helpers
 		float radiansPerSecond{ m_rotationPerSecond };
 
 		// Accelerate movement and rotation if left control key held
-		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		{
 			worldUnitsPerSecond *= 10.0f;
 			radiansPerSecond *= 10.0f;
@@ -91,6 +91,10 @@ namespace Helpers
 			m_currentMovement = -GetRightVector() * worldUnitsPerSecond;
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) // Right
 			m_currentMovement = +GetRightVector() * worldUnitsPerSecond;
+		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // Up
+			m_currentMovement = +GetUpVector() * worldUnitsPerSecond;
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) // Down
+			m_currentMovement = -GetUpVector() * worldUnitsPerSecond;
 
 		// Mouse Input
 		{
