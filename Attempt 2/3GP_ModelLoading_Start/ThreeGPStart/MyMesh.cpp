@@ -284,5 +284,11 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementsEBO);
 
 		glBindVertexArray(0);
+
+		//TODO: Texture and num ele
+		// EACH LOOP IS OVERWRITING DATA -- NEED TO MAKE TEMP VALUES AND STORE IN NEW VECTOR THEN LOOP THROUGH THAT TO DRAW
+		//mesh_numElements = newTerrain.elements.size();
+		//mesh_tex = tex;
+
 	}
 }
