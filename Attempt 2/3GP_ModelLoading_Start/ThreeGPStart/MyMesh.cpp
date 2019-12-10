@@ -243,8 +243,10 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glGenVertexArrays(1, &mesh_VAO);
-		glBindVertexArray(mesh_VAO);
+		GLuint tempVAO;
+
+		glGenVertexArrays(1, &tempVAO);
+		glBindVertexArray(tempVAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
 		glEnableVertexAttribArray(0);
@@ -281,10 +283,6 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementsEBO);
 
-		mesh_numElements = mesh.elements.size();
-		mesh_tex = tex;
-
 		glBindVertexArray(0);
 	}
 }
-

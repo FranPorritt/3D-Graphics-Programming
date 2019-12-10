@@ -2,9 +2,11 @@
 #include "ExternalLibraryHeaders.h"
 #include "Helper.h"
 #include "Mesh.h"
-#include "MyMesh.h"
+#include "Model.h"
 
-class Skybox : public MyMesh
+class Skybox : public Model
 {
+public:
+	void Draw(GLuint& m_program, glm::mat4 view_xform) override;
 };
 

@@ -7,19 +7,12 @@
 #include "Camera.h"
 #include "Terrain.h"
 #include "Model.h"
-
-//struct MyMesh
-//{
-//	GLuint mesh_VAO{ 0 };
-//	GLuint mesh_numElements{ 0 };
-//	GLuint mesh_tex;
-//};
+#include "Skybox.h"
 
 class Renderer
 {
 private:
-	//std::vector<MyMesh> meshVector;
-	std::vector<Model> modelVector;
+	std::vector<Model*> modelVector;
 
 	GLuint m_program{ 0 };
 	GLuint tex;

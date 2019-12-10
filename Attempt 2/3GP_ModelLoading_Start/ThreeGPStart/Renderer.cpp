@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "ImageLoader.h"
 #include "Terrain.h"
+#include "Skybox.h"
 
 // On exit must clean up any OpenGL resources e.g. the program, the buffers
 Renderer::~Renderer()
@@ -49,17 +50,16 @@ bool Renderer::InitialiseGeometry()
 	if (!CreateProgram())
 		return false;
 
-	Model newModel;
-
-	// YOU ARE HERE - TRYING TO LOAD THE IMAGE TEXTURES
-	newModel.LoadSkybox("Data\\Sky\\Mountains\\skybox.x", 0);
-	modelVector.push_back(newModel);
+	Skybox* newSkybox = new Skybox();
+	newSkybox->LoadSkybox("Data\\Sky\\Mountains\\skybox.x", 0);
+	modelVector.push_back(newSkybox);
 		
-	newModel.Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
-	modelVector.push_back(newModel);
-	
-	newModel.LoadTerrain("Data\\Textures\\grass11.bmp", 0);
-	modelVector.push_back(newModel);
+	//Model* newModel = new Model();
+	//newModel->Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
+	//modelVector.push_back(newModel);
+	//
+	//newModel->LoadTerrain("Data\\Textures\\grass11.bmp", 0);
+	//modelVector.push_back(newModel);
 
 	return true;
 }
@@ -108,7 +108,7 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 
 	for (auto& model : modelVector)
 	{
-		model.Draw(m_program);
+		model->Draw(m_program, view_xform);
 	}
 
 	// Always a good idea, when debugging at least, to check for GL errors
