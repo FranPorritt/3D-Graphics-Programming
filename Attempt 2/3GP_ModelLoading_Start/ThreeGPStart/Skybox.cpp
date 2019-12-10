@@ -1,12 +1,12 @@
 #include "Skybox.h"
 #include "Model.h"
 
-void Skybox::Draw(GLuint& m_program, glm::mat4 view_xform)
+void Skybox::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 combined_xform)
 {
-	/*glDepthMask(GL_FALSE);
+	glDepthMask(GL_FALSE);
 	glDisable(GL_DEPTH_TEST);
 
-	glm::mat4 view_xform2 = glm::mat4(glm::mat3(view_xform));	*/
+	// YOU ARE HERE -- CHANGING COMBINED XFORM FOR EACH DRAW CALL
 
 	for (auto& mesh : meshVector)
 	{

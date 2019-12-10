@@ -14,6 +14,6 @@ public:
 
 	bool Load(std::string filename, std::string imgFilename, GLuint tex);
 	bool LoadTerrain(std::string filename, GLuint tex);
-	bool LoadSkybox(std::string filename, GLuint tex);
+	bool LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& meshVector);
 };
 

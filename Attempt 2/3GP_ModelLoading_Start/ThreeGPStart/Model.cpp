@@ -17,11 +17,11 @@ void Model::LoadTerrain(std::string filename, GLuint tex)
 void Model::LoadSkybox(std::string filename, GLuint tex)
 {
 	MyMesh newSkybox;
-	newSkybox.LoadSkybox(filename, tex);
+	newSkybox.LoadSkybox(filename, tex, meshVector);
 	meshVector.push_back(newSkybox);
 }
 
-void Model::Draw(GLuint& m_program, glm::mat4 view_xform)
+void Model::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 combined_xform)
 {
 	for (auto& mesh : meshVector)
 	{

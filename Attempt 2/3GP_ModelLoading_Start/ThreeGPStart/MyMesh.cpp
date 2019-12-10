@@ -183,16 +183,16 @@ bool MyMesh::LoadTerrain(std::string filename, GLuint tex)
 	return true;
 }
 
-bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
+bool MyMesh::LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& meshVector)
 {
 	std::vector<std::string> skyboxImgVector =
 	{
+		"Data\\Sky\\Mountains\\6.jpg",
 		"Data\\Sky\\Mountains\\1.jpg",
-		"Data\\Sky\\Mountains\\2.jpg",
 		"Data\\Sky\\Mountains\\3.jpg",
 		"Data\\Sky\\Mountains\\4.jpg",
+		"Data\\Sky\\Mountains\\2.jpg",
 		"Data\\Sky\\Mountains\\5.jpg",
-		"Data\\Sky\\Mountains\\6.jpg",
 	};
 
 	Helpers::ModelLoader loader;
@@ -283,12 +283,12 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex)
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementsEBO);
 
+		MyMesh tempMesh;
+		tempMesh.mesh_VAO = tempVAO;
+		tempMesh.mesh_numElements = mesh.elements.size();
+		tempMesh.mesh_tex = tex;
+		meshVector.push_back(tempMesh);
+
 		glBindVertexArray(0);
-
-		//TODO: Texture and num ele
-		// EACH LOOP IS OVERWRITING DATA -- NEED TO MAKE TEMP VALUES AND STORE IN NEW VECTOR THEN LOOP THROUGH THAT TO DRAW
-		//mesh_numElements = newTerrain.elements.size();
-		//mesh_tex = tex;
-
 	}
 }

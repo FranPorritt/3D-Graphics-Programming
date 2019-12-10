@@ -86,6 +86,7 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 
 	// TODO: Compute camera view matrix and combine with projection matrix for passing to shader
 	glm::mat4 view_xform = glm::lookAt(camera.GetPosition(), camera.GetPosition() + camera.GetLookVector(), camera.GetUpVector());
+	glm::mat4 view_xform2 = glm::mat4(glm::mat3(view_xform));
 	glm::mat4 combined_xform = projection_xform * view_xform;
 
 	glUseProgram(m_program);
@@ -108,7 +109,7 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 
 	for (auto& model : modelVector)
 	{
-		model->Draw(m_program, view_xform);
+		model->Draw(m_program, view_xform, view_xform2, combined_xform);
 	}
 
 	// Always a good idea, when debugging at least, to check for GL errors
