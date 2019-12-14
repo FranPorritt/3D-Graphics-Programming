@@ -15,9 +15,9 @@ public:
 	std::vector <GLuint> elements;
 
 	// Height map
-	const float scaling = 0.3f;
+	const float scaling = 5.0f;
 
-	const int numCellsXZ = 100; // Square terrain
+	const int numCellsXZ = 100; // Square terrain -- LOOK AT KEITHS VIDEO
 	const int numCellsX = numCellsXZ;
 	const int numCellsZ = numCellsXZ;
 
@@ -26,7 +26,7 @@ public:
 
 	const int numVertices = (numCellsX * 2) + (numCellsZ * 2);;
 
-	const int terrainSize = 1500;
+	const int terrainSize = 7500;
 	const int cellSize = terrainSize / numCellsX;
 	
 	Terrain();

@@ -54,12 +54,12 @@ bool Renderer::InitialiseGeometry()
 	newSkybox->LoadSkybox("Data\\Sky\\Mountains\\skybox.x", 0);
 	modelVector.push_back(newSkybox);
 		
-	//Model* newModel = new Model();
-	//newModel->Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
-	//modelVector.push_back(newModel);
-	//
-	//newModel->LoadTerrain("Data\\Textures\\grass11.bmp", 0);
-	//modelVector.push_back(newModel);
+	Model* newModel = new Model();
+	newModel->Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
+	modelVector.push_back(newModel);
+	
+	newModel->LoadTerrain("Data\\Textures\\grass11.bmp", 0);
+	modelVector.push_back(newModel);
 
 	return true;
 }
@@ -82,7 +82,7 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 	GLint viewportSize[4];
 	glGetIntegerv(GL_VIEWPORT, viewportSize);
 	const float aspect_ratio = viewportSize[2] / (float)viewportSize[3];
-	glm::mat4 projection_xform = glm::perspective(glm::radians(45.0f), aspect_ratio, 1.0f, 4000.0f);
+	glm::mat4 projection_xform = glm::perspective(glm::radians(45.0f), aspect_ratio, 1.0f, 7500.0f);
 
 	// TODO: Compute camera view matrix and combine with projection matrix for passing to shader
 	glm::mat4 view_xform = glm::lookAt(camera.GetPosition(), camera.GetPosition() + camera.GetLookVector(), camera.GetUpVector());
@@ -92,8 +92,8 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 	glUseProgram(m_program);
 
 	// TODO: Send the combined matrix to the shader in a uniform
-	GLuint combined_xform_id = glGetUniformLocation(m_program, "combined_xform");
-	glUniformMatrix4fv(combined_xform_id, 1, GL_FALSE, glm::value_ptr(combined_xform));
+	/*GLuint combined_xform_id = glGetUniformLocation(m_program, "combined_xform");
+	glUniformMatrix4fv(combined_xform_id, 1, GL_FALSE, glm::value_ptr(combined_xform));*/
 
 	GLuint lightPos_id = glGetUniformLocation(m_program, "lightPos");
 	glUniformMatrix4fv(lightPos_id, 1, GL_FALSE, glm::value_ptr((glm::vec3)(0, 50, 0)));
@@ -109,7 +109,7 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 
 	for (auto& model : modelVector)
 	{
-		model->Draw(m_program, view_xform, view_xform2, combined_xform);
+		model->Draw(m_program, view_xform, view_xform2, projection_xform, combined_xform);
 	}
 
 	// Always a good idea, when debugging at least, to check for GL errors

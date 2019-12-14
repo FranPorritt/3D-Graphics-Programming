@@ -183,16 +183,24 @@ bool MyMesh::LoadTerrain(std::string filename, GLuint tex)
 	return true;
 }
 
+//CLAMP
 bool MyMesh::LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& meshVector)
 {
 	std::vector<std::string> skyboxImgVector =
 	{
-		"Data\\Sky\\Mountains\\6.jpg",
-		"Data\\Sky\\Mountains\\1.jpg",
-		"Data\\Sky\\Mountains\\3.jpg",
+		/*"Data\\Sky\\Mountains\\6.jpg",
 		"Data\\Sky\\Mountains\\4.jpg",
 		"Data\\Sky\\Mountains\\2.jpg",
-		"Data\\Sky\\Mountains\\5.jpg",
+		"Data\\Sky\\Mountains\\1.jpg",
+		"Data\\Sky\\Mountains\\3.jpg",
+		"Data\\Sky\\Mountains\\5.jpg",*/
+
+		"Data\\Sky\\Hills\\skybox_top.jpg",
+		"Data\\Sky\\Hills\\skybox_front.jpg",
+		"Data\\Sky\\Hills\\skybox_back.jpg",
+		"Data\\Sky\\Hills\\skybox_left.jpg",
+		"Data\\Sky\\Hills\\skybox_right.jpg",
+		"Data\\Sky\\Hills\\skybox_bottom.jpg",
 	};
 
 	Helpers::ModelLoader loader;

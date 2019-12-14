@@ -21,8 +21,13 @@ void Model::LoadSkybox(std::string filename, GLuint tex)
 	meshVector.push_back(newSkybox);
 }
 
-void Model::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 combined_xform)
+void Model::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 projection_xform, glm::mat4 combined_xform)
 {
+	combined_xform = projection_xform * view_xform;
+
+	GLuint combined_xform_id = glGetUniformLocation(m_program, "combined_xform");
+	glUniformMatrix4fv(combined_xform_id, 1, GL_FALSE, glm::value_ptr(combined_xform));
+
 	for (auto& mesh : meshVector)
 	{
 		glActiveTexture(GL_TEXTURE0);

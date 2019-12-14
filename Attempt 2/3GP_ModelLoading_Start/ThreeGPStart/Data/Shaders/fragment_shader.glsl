@@ -13,8 +13,8 @@ out vec4 fragment_colour;
 void main(void)
 {
 	// Lighting
-	vec3 light_ambient_colour = vec3(0.75);
-	float lightRange = 3000;
+	vec3 light_ambient_colour = vec3(0.7, 0.8, 0.4);
+	float lightRange = 8000;
 
 	vec3 material_diffuse_colour = texture(sampler_tex, texCoord).rgb;
 	vec3 fragment_position = varying_position;

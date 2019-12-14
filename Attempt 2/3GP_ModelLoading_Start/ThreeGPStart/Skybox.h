@@ -7,6 +7,6 @@
 class Skybox : public Model
 {
 public:
-	void Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 combined_xform) override;
+	void Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 projection_xform, glm::mat4 combined_xform) override;
 };
 
