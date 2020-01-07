@@ -12,15 +12,15 @@
 class Renderer
 {
 private:
-	std::vector<Model*> modelVector;
-
-	glm::mat4 projection_xform;
+	glm::mat4 projection_xform = glm::mat4(1.0);
 
 	GLuint m_program = 0;
 	GLuint tex = 0;
 
 	bool CreateProgram();
 public:
+	std::vector<Model*> modelVector;
+
 	Renderer()=default;
 	~Renderer();
 

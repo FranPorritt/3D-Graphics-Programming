@@ -1,5 +1,6 @@
 #include "Simulation.h"
 #include "Renderer.h"
+#include "Model.h"
 
 // Initialise this as well as the renderer, returns false on error
 bool Simulation::Initialise()
@@ -30,6 +31,26 @@ bool Simulation::HandleInput(GLFWwindow* window)
 	// To prevent the mouse leaving the window (and to hide the arrow) you can call:
 	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	// To reenable it use GLFW_CURSOR_NORMAL
+
+	/*if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		m_renderer->modelVector[1]->Movement(200, 0, 0);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		m_renderer->modelVector[1]->Movement(-2, 0, 0);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		m_renderer->modelVector[1]->Movement(0, 0, 2);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		m_renderer->modelVector[1]->Movement(0, 0, -2);
+	}*/
 
 	// To see an example of input using GLFW see the camera.cpp file.
 	return true;

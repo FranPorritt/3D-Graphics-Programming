@@ -8,7 +8,7 @@
 class MyMesh
 {
 public:
-	glm::mat4 model_xform = glm::mat4(1.0f);
+	glm::mat4 model_xform = glm::mat4(1.0);
 
 	GLuint mesh_VAO = 0;
 	GLuint mesh_numElements = 0;

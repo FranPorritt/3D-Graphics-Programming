@@ -11,8 +11,9 @@ class Model
 {
 protected:
 	std::vector<MyMesh> meshVector;
+//	glm::mat4 model_xform = glm::mat4(1.0);
 	glm::vec3 modelPos = { 0,0,0 };
-	glm::vec3 m_currentMovement = { 0,0,0 };
+	glm::vec3 scaleSize = { 0,0,0 };
 
 public:
 	void Load(std::string filename, std::string imgFilename, GLuint tex, glm::vec3 posTransfrom);
@@ -20,6 +21,6 @@ public:
 	void LoadSkybox(std::string filename, GLuint tex);
 	virtual void Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2, glm::mat4 projection_xform, glm::mat4 combined_xform);
 
-	//glm::vec3 Movement(GLFWwindow* window);
+	//void Movement(const float& x, const float& y, const float& z);
 };
 

@@ -37,6 +37,9 @@ void Model::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2,
 
 	for (auto& mesh : meshVector)
 	{
+		//glm::mat4 transform = glm::translate(mesh.model_xform, glm::vec3(modelPos));
+		//mesh.model_xform = glm::translate(mesh.model_xform, modelPos);
+
 		GLuint model_xform_id = glGetUniformLocation(m_program, "model_xform");
 		glUniformMatrix4fv(model_xform_id, 1, GL_FALSE, glm::value_ptr(mesh.model_xform));
 
@@ -52,19 +55,9 @@ void Model::Draw(GLuint& m_program, glm::mat4 view_xform, glm::mat4 view_xform2,
 	Helpers::CheckForGLError();
 }
 
-//glm::vec3 Model::Movement(GLFWwindow* window)
+//void Model::Movement(const float& x, const float& y, const float& z)
 //{
-//	m_currentMovement = glm::vec3(0);
-//
-//	// Keyboard Input
-//	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) // Forward		
-//		m_currentMovement = { 2,1,1 };
-//	//if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) // Backwards		
-//	//	m_currentMovement = -GetLookVector() * worldUnitsPerSecond;
-//	//if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) // Left		
-//	//	m_currentMovement = -GetRightVector() * worldUnitsPerSecond;
-//	//if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) // Right
-//	//	m_currentMovement = +GetRightVector() * worldUnitsPerSecond;
-//
-//	return m_currentMovement;
+//	modelPos.x += x;
+//	modelPos.y += y;
+//	modelPos.z += z;
 //}
