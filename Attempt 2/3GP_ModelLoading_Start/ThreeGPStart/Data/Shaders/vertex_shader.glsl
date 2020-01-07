@@ -15,8 +15,9 @@ out vec2 texCoord;
 void main(void)
 {
 	vec4 normal_transform = model_xform * vec4(vertex_normal, 0);
-	varying_normal = vec3((normal_transform + 1) / 2);
-	varying_position = vertex_position;
+	//varying_normal = vec3((normal_transform + 1) / 2);
+	varying_normal = mat3(model_xform) * vertex_normal;
+	varying_position = mat4x3(model_xform) * vec4(vertex_position, 1.0);
 	texCoord = TexCoord;
 
 	gl_Position = combined_xform * model_xform * vec4(vertex_position, 1.0); 

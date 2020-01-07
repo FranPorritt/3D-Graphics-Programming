@@ -14,8 +14,10 @@ class Renderer
 private:
 	std::vector<Model*> modelVector;
 
-	GLuint m_program{ 0 };
-	GLuint tex;
+	glm::mat4 projection_xform;
+
+	GLuint m_program = 0;
+	GLuint tex = 0;
 
 	bool CreateProgram();
 public:
@@ -25,6 +27,7 @@ public:
 	// Create and / or load geometry, this is like 'level load'
 	bool InitialiseGeometry();
 
+	void InitRender();
 	// Render the scene
 	void Render(const Helpers::Camera& camera, float deltaTime);
 };

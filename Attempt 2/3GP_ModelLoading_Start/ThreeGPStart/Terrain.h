@@ -7,17 +7,11 @@
 
 class Terrain
 {
-public:
-	// Vertex positions on terrain
-	std::vector <glm::vec3> vertices;
-	std::vector <glm::vec3> normals;
-	std::vector <glm::vec2> uvcoords;
-	std::vector <GLuint> elements;
-
+protected:
 	// Height map
-	const float scaling = 5.0f;
+	const float scaling = 6.0f;
 
-	const int numCellsXZ = 100; // Square terrain -- LOOK AT KEITHS VIDEO
+	const int numCellsXZ = 250;
 	const int numCellsX = numCellsXZ;
 	const int numCellsZ = numCellsXZ;
 
@@ -26,8 +20,14 @@ public:
 
 	const int numVertices = (numCellsX * 2) + (numCellsZ * 2);;
 
-	const int terrainSize = 7500;
-	const int cellSize = terrainSize / numCellsX;
+	const int terrainSize = 12000;
+	const int cellSize = terrainSize / numCellsXZ;
+
+public:
+	std::vector <glm::vec3> vertices;
+	std::vector <glm::vec3> normals;
+	std::vector <glm::vec2> uvcoords;
+	std::vector <GLuint> elements;
 	
 	Terrain();
 	~Terrain();

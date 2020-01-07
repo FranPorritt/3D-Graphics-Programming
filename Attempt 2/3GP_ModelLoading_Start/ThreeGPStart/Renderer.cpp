@@ -55,13 +55,27 @@ bool Renderer::InitialiseGeometry()
 	modelVector.push_back(newSkybox);
 		
 	Model* newModel = new Model();
-	newModel->Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0);
+	newModel->Load("Data\\Models\\Jeep\\jeep.obj", "Data\\Models\\Jeep\\jeep_army.jpg", 0, {250.0f, 200.0f , -750.0f });
+	modelVector.push_back(newModel);
+
+	newModel->Load("Data\\Models\\Chicken\\chicken_01.obj", "Data\\Models\\Chicken\\chicken_01.tga", 0, { 50.0f, 600.0f , 100.0f });
 	modelVector.push_back(newModel);
 	
 	newModel->LoadTerrain("Data\\Textures\\grass11.bmp", 0);
 	modelVector.push_back(newModel);
 
+	InitRender();
+
 	return true;
+}
+
+void Renderer::InitRender()
+{
+	// TODO: Compute viewport and projection matrix
+	GLint viewportSize[4];
+	glGetIntegerv(GL_VIEWPORT, viewportSize);
+	const float aspect_ratio = viewportSize[2] / (float)viewportSize[3];
+	projection_xform = glm::perspective(glm::radians(45.0f), aspect_ratio, 1.0f, 12000.0f);
 }
 
 // Render the scene. Passed the delta time since last called.
@@ -78,34 +92,12 @@ void Renderer::Render(const Helpers::Camera& camera, float deltaTime)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// TODO: Compute viewport and projection matrix
-	GLint viewportSize[4];
-	glGetIntegerv(GL_VIEWPORT, viewportSize);
-	const float aspect_ratio = viewportSize[2] / (float)viewportSize[3];
-	glm::mat4 projection_xform = glm::perspective(glm::radians(45.0f), aspect_ratio, 1.0f, 7500.0f);
-
 	// TODO: Compute camera view matrix and combine with projection matrix for passing to shader
 	glm::mat4 view_xform = glm::lookAt(camera.GetPosition(), camera.GetPosition() + camera.GetLookVector(), camera.GetUpVector());
 	glm::mat4 view_xform2 = glm::mat4(glm::mat3(view_xform));
 	glm::mat4 combined_xform = projection_xform * view_xform;
 
 	glUseProgram(m_program);
-
-	// TODO: Send the combined matrix to the shader in a uniform
-	/*GLuint combined_xform_id = glGetUniformLocation(m_program, "combined_xform");
-	glUniformMatrix4fv(combined_xform_id, 1, GL_FALSE, glm::value_ptr(combined_xform));*/
-
-	GLuint lightPos_id = glGetUniformLocation(m_program, "lightPos");
-	glUniformMatrix4fv(lightPos_id, 1, GL_FALSE, glm::value_ptr((glm::vec3)(0, 50, 0)));
-	
-	GLuint cameraPos_id = glGetUniformLocation(m_program, "cameraPos");
-	glUniformMatrix4fv(lightPos_id, 1, GL_FALSE, glm::value_ptr(camera.GetPosition()));
-
-	glm::mat4 model_xform = glm::mat4(1);
-
-	// Send the model matrix to the shader in a uniform
-	GLuint model_xform_id = glGetUniformLocation(m_program, "model_xform");
-	glUniformMatrix4fv(model_xform_id, 1, GL_FALSE, glm::value_ptr(model_xform));
 
 	for (auto& model : modelVector)
 	{

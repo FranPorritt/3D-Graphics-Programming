@@ -1,6 +1,6 @@
 #include "MyMesh.h"
 
-bool MyMesh::Load(std::string filename, std::string imgFilename, GLuint tex)
+bool MyMesh::Load(std::string filename, std::string imgFilename, GLuint tex, glm::vec3 posTransfrom)
 {
 	Helpers::ModelLoader loader;
 	if (!loader.LoadFromFile(filename))
@@ -88,8 +88,12 @@ bool MyMesh::Load(std::string filename, std::string imgFilename, GLuint tex)
 		mesh_numElements = mesh.elements.size();
 		mesh_tex = tex;
 
+		model_xform = glm::translate(model_xform, posTransfrom);
+
 		glBindVertexArray(0);
 	}
+
+	return true;
 }
 
 bool MyMesh::LoadTerrain(std::string filename, GLuint tex)
@@ -183,17 +187,17 @@ bool MyMesh::LoadTerrain(std::string filename, GLuint tex)
 	return true;
 }
 
-//CLAMP
+//CLAMP NEEDS TO BE DONE
 bool MyMesh::LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& meshVector)
 {
 	std::vector<std::string> skyboxImgVector =
 	{
-		/*"Data\\Sky\\Mountains\\6.jpg",
-		"Data\\Sky\\Mountains\\4.jpg",
-		"Data\\Sky\\Mountains\\2.jpg",
-		"Data\\Sky\\Mountains\\1.jpg",
-		"Data\\Sky\\Mountains\\3.jpg",
-		"Data\\Sky\\Mountains\\5.jpg",*/
+		//"Data\\Sky\\Mountains\\6.jpg",
+		//"Data\\Sky\\Mountains\\4.jpg",
+		//"Data\\Sky\\Mountains\\2.jpg",
+		//"Data\\Sky\\Mountains\\1.jpg",
+		//"Data\\Sky\\Mountains\\3.jpg",
+		//"Data\\Sky\\Mountains\\5.jpg",
 
 		"Data\\Sky\\Hills\\skybox_top.jpg",
 		"Data\\Sky\\Hills\\skybox_front.jpg",
@@ -252,7 +256,6 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& m
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		GLuint tempVAO;
-
 		glGenVertexArrays(1, &tempVAO);
 		glBindVertexArray(tempVAO);
 
@@ -299,4 +302,6 @@ bool MyMesh::LoadSkybox(std::string filename, GLuint tex, std::vector<MyMesh>& m
 
 		glBindVertexArray(0);
 	}
+
+	return true;
 }

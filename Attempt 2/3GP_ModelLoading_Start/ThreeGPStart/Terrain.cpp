@@ -84,24 +84,26 @@ void Terrain::CreateNormals()
 	}
 
 	// Calculate face normal
-	for (int elemIndex = 0; elemIndex < elements.size(); elemIndex += 3)
+	for (GLuint elemIndex = 0; elemIndex < elements.size(); elemIndex += 3)
 	{
-		glm::vec3 vertex0 = vertices[elements[elemIndex]];		// Vertex position at first indice of triangle
-		glm::vec3 vertex1 = vertices[elements[elemIndex + 1]];
-		glm::vec3 vertex2 = vertices[elements[elemIndex + 2]];
+		GLuint index1 = elements[elemIndex];
+		GLuint index2 = elements[elemIndex + 1];
+		GLuint index3 = elements[elemIndex + 2];
 
-		glm::vec3 norm = glm::cross((vertex1 - vertex0), (vertex2 - vertex0));
+		glm::vec3 vertex0 = vertices[index1];		// Vertex position at first indice of triangle, ect.
+		glm::vec3 vertex1 = vertices[index2];
+		glm::vec3 vertex2 = vertices[index3];
 
-		for (auto& normal : normals)
-		{
-			normal += norm;
-		}
+		glm::vec3 norm = glm::normalize(glm::cross((vertex1 - vertex0), (vertex2 - vertex0)));
+
+		normals[index1] += norm;
+		normals[index2] += norm;
+		normals[index3] += norm;
 	}
 
-	// Normalize normals
 	for (auto& normal : normals)
 	{
-		glm::normalize(normal);
+		normal = glm::normalize(normal);
 	}
 }
 
