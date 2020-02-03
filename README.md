@@ -1,2 +1,2 @@
-# 3D Graphics Programming new
+# 3D Graphics Programming
  
